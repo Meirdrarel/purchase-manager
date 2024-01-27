@@ -1,0 +1,31 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Mutation {
+  createPurchaseOrder(newPurchaseOrder: NewPurchaseOrderInput!): PurchaseOrder!
+  updatePurchaseOrder(updatePurchaseOrder: UpdatePurchaseOrderInput!): PurchaseOrder!
+}
+
+input NewPurchaseOrderInput {
+  client: String!
+  number: String!
+}
+
+"""Purchase Order """
+type PurchaseOrder {
+  client: String!
+  number: String!
+  uuid: String!
+}
+
+type Query {
+  getAllPurchaseOrders: [PurchaseOrder!]!
+  getPurchaseOrder(number: String!): PurchaseOrder!
+}
+
+input UpdatePurchaseOrderInput {
+  client: String
+  number: String
+  uuid: String!
+}
