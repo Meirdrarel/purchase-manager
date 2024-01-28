@@ -1,9 +1,10 @@
 import {Injectable} from "@nestjs/common";
-import {PurchaseOrder} from "./entities/porder.entity";
+import {PurchaseOrder} from "./models/porder.model";
 import {InjectModel} from "@nestjs/sequelize";
 import {NewPurchaseOrderInput} from "./dto/new-purchase-order.input";
 import {randomUUID} from "crypto";
 import {UpdatePurchaseOrderInput} from "./dto/update-purchase-order.input";
+import {use} from "passport";
 
 @Injectable()
 export class PurchaseOrderService {
@@ -14,28 +15,39 @@ export class PurchaseOrderService {
     ) {
     }
 
-    async findAll() : Promise<PurchaseOrder[]> {
-        return this.purchaseOrderModel.findAll();
+    async findAllForUser(userId:string) : Promise<PurchaseOrder[]> {
+        return this.purchaseOrderModel.findAll({
+            where: {
+                userId: userId
+            }
+        });
     }
 
-    async findOneByNumber(number: string): Promise<PurchaseOrder> {
+    async findOneByNumberForUser(userId: string, number: string): Promise<PurchaseOrder> {
         return this.purchaseOrderModel.findOne({
             where: {
+                userId: userId,
                 number: number
             }
         });
     }
 
-    async createPurchaseOrder(newPurchaseOrder: NewPurchaseOrderInput){
+    async createPurchaseOrderForUser(userId: string, newPurchaseOrder: NewPurchaseOrderInput){
             const newObject = {
-                uuid: randomUUID(),
+                userId: userId,
+                id: randomUUID(),
                 ...newPurchaseOrder
             };
             return this.purchaseOrderModel.create<PurchaseOrder>(newObject);
     }
 
-    async updatePurchaseOrder(updatePurchaseOrder: UpdatePurchaseOrderInput) {
-        const purchaseOrder = await this.purchaseOrderModel.findByPk(updatePurchaseOrder.uuid);
+    async updatePurchaseOrderForUser(userId: string, updatePurchaseOrder: UpdatePurchaseOrderInput) {
+        const purchaseOrder = await this.purchaseOrderModel.findOne({
+            where: {
+                userId: userId,
+                number: updatePurchaseOrder.uuid
+            }
+        });
         return purchaseOrder.update(updatePurchaseOrder);
     }
 }

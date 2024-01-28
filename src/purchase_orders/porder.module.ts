@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import {SequelizeModule} from "@nestjs/sequelize";
-import {PurchaseOrder} from "./entities/porder.entity";
+import {PurchaseOrder} from "./models/porder.model";
 import {PurchaseOrderService} from "./purchase_order.service";
 import {PurchaseOrderResolver} from "./purchase_order.resolver";
 

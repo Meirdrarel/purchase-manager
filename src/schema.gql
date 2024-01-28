@@ -15,8 +15,8 @@ input NewPurchaseOrderInput {
 """Purchase Order """
 type PurchaseOrder {
   client: String!
+  id: String!
   number: String!
-  uuid: String!
 }
 
 type Query {
