@@ -1,34 +1,37 @@
 import {Injectable} from "@nestjs/common";
-import {PurchaseOrder} from "./models/porder.model";
+import {PurchaseOrderModel} from "./models/purchase-order.model";
 import {InjectModel} from "@nestjs/sequelize";
 import {NewPurchaseOrderInput} from "./dto/new-purchase-order.input";
 import {randomUUID} from "crypto";
 import {UpdatePurchaseOrderInput} from "./dto/update-purchase-order.input";
 import {use} from "passport";
+import {PurchaseOrderLineModel} from "./models/purchase-order-line.model";
 
 @Injectable()
 export class PurchaseOrderService {
 
     constructor(
-        @InjectModel(PurchaseOrder)
-        private purchaseOrderModel: typeof PurchaseOrder
+        @InjectModel(PurchaseOrderModel)
+        private purchaseOrderModel: typeof PurchaseOrderModel
     ) {
     }
 
-    async findAllForUser(userId:string) : Promise<PurchaseOrder[]> {
+    async findAllForUser(userId:string) : Promise<PurchaseOrderModel[]> {
         return this.purchaseOrderModel.findAll({
             where: {
                 userId: userId
-            }
+            },
+            include: [PurchaseOrderLineModel]
         });
     }
 
-    async findOneByNumberForUser(userId: string, number: string): Promise<PurchaseOrder> {
+    async findOneByNumberForUser(userId: string, number: string): Promise<PurchaseOrderModel> {
         return this.purchaseOrderModel.findOne({
             where: {
                 userId: userId,
                 number: number
-            }
+            },
+            include: [PurchaseOrderLineModel]
         });
     }
 
@@ -38,7 +41,7 @@ export class PurchaseOrderService {
                 id: randomUUID(),
                 ...newPurchaseOrder
             };
-            return this.purchaseOrderModel.create<PurchaseOrder>(newObject);
+            return this.purchaseOrderModel.create<PurchaseOrderModel>(newObject);
     }
 
     async updatePurchaseOrderForUser(userId: string, updatePurchaseOrder: UpdatePurchaseOrderInput) {

@@ -1,5 +1,5 @@
 import {Column, Model, PrimaryKey, Table, DataType, AllowNull, HasMany} from "sequelize-typescript";
-import {PurchaseOrder} from "../purchase_orders/models/porder.model";
+import {PurchaseOrderModel} from "../purchase_orders/models/purchase-order.model";
 import {User} from "./user.interface";
 
 @Table({tableName: 'Users'})
@@ -12,13 +12,13 @@ export class UserModel extends Model implements User {
 
     @AllowNull(false)
     @Column
-    email: string
+    email: string;
 
     @AllowNull(false)
     @Column
     password: string;
 
-    @HasMany(() => PurchaseOrder)
-    purchaseOrders: PurchaseOrder[];
+    @HasMany(() => PurchaseOrderModel)
+    purchaseOrders: PurchaseOrderModel[];
 
 }

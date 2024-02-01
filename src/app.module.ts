@@ -3,7 +3,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path'
 import {SequelizeModule} from "@nestjs/sequelize";
-import {PurchaseModule} from "./purchase_orders/porder.module";
+import {PurchaseModule} from "./purchase_orders/purchase-order.module";
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import {AppController} from "./app.controller";

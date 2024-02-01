@@ -1,14 +1,15 @@
 import {Field, InputType} from "@nestjs/graphql";
+import {PurchaseOrder} from "../models/purchase-order.interface";
 
 @InputType()
-export class UpdatePurchaseOrderInput {
+export class UpdatePurchaseOrderInput implements Partial<PurchaseOrder>{
 
     @Field({nullable: false})
-    uuid: string
+    uuid: string;
 
     @Field({nullable: true})
-    number: string
+    number: string;
 
     @Field({ nullable: true })
-    client: string
+    client: string;
 }
