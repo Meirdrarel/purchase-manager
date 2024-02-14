@@ -1,4 +1,4 @@
-export interface PurchaseOrderLine {
+export interface SalesOrderLine {
     id: string;
     purchaseOrderId: string;
     lineNumber: number;

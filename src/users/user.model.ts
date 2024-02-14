@@ -1,5 +1,5 @@
 import {Column, Model, PrimaryKey, Table, DataType, AllowNull, HasMany} from "sequelize-typescript";
-import {PurchaseOrderModel} from "../purchase_orders/models/purchase-order.model";
+import {SalesOrderModel} from "../sales/models/sales-order.model";
 import {User} from "./user.interface";
 
 @Table({tableName: 'Users'})
@@ -18,7 +18,7 @@ export class UserModel extends Model implements User {
     @Column
     password: string;
 
-    @HasMany(() => PurchaseOrderModel)
-    purchaseOrders: PurchaseOrderModel[];
+    @HasMany(() => SalesOrderModel)
+    purchaseOrders: SalesOrderModel[];
 
 }

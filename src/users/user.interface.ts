@@ -1,8 +1,8 @@
-import {PurchaseOrderModel} from "../purchase_orders/models/purchase-order.model";
+import {SalesOrderModel} from "../sales/models/sales-order.model";
 
 export interface User {
     id: string;
     email: string;
     password: string;
-    purchaseOrders: PurchaseOrderModel[];
+    purchaseOrders: SalesOrderModel[];
 }

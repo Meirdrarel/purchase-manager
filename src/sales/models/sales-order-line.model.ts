@@ -9,47 +9,40 @@ import {
     PrimaryKey,
     Table
 } from "sequelize-typescript";
-import {PurchaseOrderLine} from "./purchase-order-line.interface";
-import {Field, Int, ObjectType} from "@nestjs/graphql";
-import {PurchaseOrderModel} from "./purchase-order.model";
+import {SalesOrderLine} from "../interfaces/sales-order-line.interface";
+import {SalesOrderModel} from "./sales-order.model";
 
-@Table({tableName: 'PurchaseOrderLines'})
-@ObjectType({ description: 'Purchase Order lines' })
-export class PurchaseOrderLineModel extends Model implements PurchaseOrderLine {
+@Table({tableName: 'SalesOrderLines'})
+export class SalesOrderLineModel extends Model implements SalesOrderLine {
 
     @PrimaryKey
     @AllowNull(false)
     @Column(DataType.UUID)
-    @Field(() => String)
     id: string;
 
     @Index({name:'num-line', unique: true})
     @AllowNull(false)
     @Column
-    @Field(() => String)
     purchaseNum: string;
 
     @Index('num-line')
     @AllowNull(false)
     @Column(DataType.INTEGER)
-    @Field(() => Int)
     lineNumber: number;
 
     @AllowNull(false)
     @Column
-    @Field(() => String)
     articleDesignation: string;
 
     @AllowNull(false)
     @Column
-    @Field(() => Number)
     quantity: number;
 
-    @ForeignKey(() => PurchaseOrderModel)
+    @ForeignKey(() => SalesOrderModel)
     @Column(DataType.UUID)
     purchaseOrderId: string
 
-    @BelongsTo(() => PurchaseOrderModel, 'purchaseOrderId')
-    user: PurchaseOrderModel;
+    @BelongsTo(() => SalesOrderModel, 'purchaseOrderId')
+    user: SalesOrderModel;
 
 }

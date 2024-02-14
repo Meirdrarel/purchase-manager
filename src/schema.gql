@@ -3,17 +3,30 @@
 # ------------------------------------------------------
 
 type Mutation {
-  createPurchaseOrder(newPurchaseOrder: NewPurchaseOrderInput!): PurchaseOrderModel!
-  updatePurchaseOrder(updatePurchaseOrder: UpdatePurchaseOrderInput!): PurchaseOrderModel!
+  createSalesOrder(newSalesOrder: NewSalesOrderInput!): SalesOrder!
+  updateSalesOrder(updateSalesOrder: UpdateSalesOrderInput!): SalesOrder!
 }
 
-input NewPurchaseOrderInput {
+input NewSalesOrderInput {
   client: String!
   number: String!
 }
 
-"""Purchase Order lines"""
-type PurchaseOrderLineModel {
+type Query {
+  SalesOrder(number: String!): SalesOrder!
+  getAllSalesOrders: [SalesOrder!]!
+}
+
+"""Sales Order"""
+type SalesOrder {
+  client: String!
+  id: String!
+  lines: [SalesOrderLine!]!
+  number: String!
+}
+
+"""Sales Order lines"""
+type SalesOrderLine {
   articleDesignation: String!
   id: String!
   lineNumber: Int!
@@ -21,20 +34,7 @@ type PurchaseOrderLineModel {
   quantity: Float!
 }
 
-"""Purchase Order"""
-type PurchaseOrderModel {
-  client: String!
-  id: String!
-  lines: [PurchaseOrderLineModel!]!
-  number: String!
-}
-
-type Query {
-  getAllPurchaseOrders: [PurchaseOrderModel!]!
-  getPurchaseOrder(number: String!): PurchaseOrderModel!
-}
-
-input UpdatePurchaseOrderInput {
+input UpdateSalesOrderInput {
   client: String
   number: String
   uuid: String!

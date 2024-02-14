@@ -3,7 +3,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path'
 import {SequelizeModule} from "@nestjs/sequelize";
-import {PurchaseModule} from "./purchase_orders/purchase-order.module";
+import {SalesModule} from "./sales/sales.module";
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import {AppController} from "./app.controller";
@@ -22,7 +22,7 @@ import {AppController} from "./app.controller";
     }),
     UsersModule,
     AuthModule,
-    PurchaseModule,
+    SalesModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
