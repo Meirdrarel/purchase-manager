@@ -32,7 +32,7 @@ export class SalesOrderResolver {
         return this.salesOrderService.findOneByNumberForUser(user.id, number);
     }
 
-    @Mutation(() => SalesOrder)
+    @Mutation(() => SalesOrder, {name: 'createSalesOrder'})
     @UseGuards(GqlAuthGuard)
     async createSalesOrder(
         @CurrentUser() user: User,

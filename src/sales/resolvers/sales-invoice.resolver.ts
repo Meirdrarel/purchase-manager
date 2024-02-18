@@ -15,16 +15,16 @@ export class SalesInvoiceResolver {
     ) {
     }
 
-    @Query(() => [SalesInvoice], {name: 'getSalesInvoices'})
+    @Query(() => [SalesInvoice], {name: 'getAllSalesInvoices'})
     @UseGuards(GqlAuthGuard)
     async getAllSalesInvoices(@CurrentUser() user: User): Promise<SalesInvoice[]> {
         return this.salesInvoiceService.findAllForUser(user.id);
     }
 
-    @Mutation(() => SalesInvoice)
+    @Mutation(() => SalesInvoice, {name: 'createSalesInvoice'})
     @UseGuards(GqlAuthGuard)
-    async createInvoice(@CurrentUser() user: User,
-                        @Args('newInvoice') newInvoice: NewSalesInvoiceInput) {
+    async createSalesInvoice(@CurrentUser() user: User,
+                             @Args('newInvoice') newInvoice: NewSalesInvoiceInput) {
         return this.salesInvoiceService.createInvoiceForUser(user.id, newInvoice);
     }
 }

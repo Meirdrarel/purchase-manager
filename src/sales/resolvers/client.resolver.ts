@@ -15,20 +15,20 @@ export class ClientResolver {
         private readonly clientService: ClientService
     ) {
     }
-    @Query(() => [Client])
+    @Query(() => [Client], {name: 'getAllClients'})
     @UseGuards(GqlAuthGuard)
-    async getAllSalesOrders(@CurrentUser() user: User): Promise<Client[]> {
+    async getAllClients(@CurrentUser() user: User): Promise<Client[]> {
         return this.clientService.findAllForUser(user.id);
     }
 
-    @Mutation(() => Client)
+    @Mutation(() => Client, {name: 'createClient'})
     @UseGuards(GqlAuthGuard)
     async createClient(@CurrentUser() user: User,
                        @Args('newClient') newClient: ClientInput) {
         return this.clientService.createClientForUser(user.id, newClient);
     }
 
-    @Mutation(() => Client)
+    @Mutation(() => Client, {name: 'updateClient'})
     @UseGuards(GqlAuthGuard)
     async updateClient(@CurrentUser() user: User,
                        @Args('clientId') clientId: string,
