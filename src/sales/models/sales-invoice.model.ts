@@ -11,21 +11,19 @@ import {
     Table
 } from "sequelize-typescript";
 import {UserModel} from "../../users/user.model";
-import {SalesOrder} from "../interfaces/sales-order.interface";
-import {SalesOrderLineModel} from "./sales-order-line.model";
-import {SalesOrderLine} from "../interfaces/sales-order-line.interface";
 import {ClientModel} from "./client.model";
-import {Client} from "../interfaces/client.interface";
+import {SalesInvoiceLineModel} from "./sales-invoice-line.model";
+import {SalesInvoice} from "../interfaces/sales-invoice.interface";
 
-@Table({tableName: 'SalesOrder'})
-export class SalesOrderModel extends Model implements SalesOrder {
+@Table({tableName: 'SalesInvoice'})
+export class SalesInvoiceModel extends Model implements SalesInvoice {
 
     @PrimaryKey
     @AllowNull(false)
     @Column(DataType.UUID)
     id: string;
 
-    @Index({name: 'userId-clientId-orderNum', unique: true})
+    @Index({name: 'userId-clientId-invoiceNum', unique: true})
     @ForeignKey(() => UserModel)
     @Column(DataType.UUID)
     userId: string;
@@ -33,22 +31,25 @@ export class SalesOrderModel extends Model implements SalesOrder {
     @BelongsTo(() => UserModel, 'userId')
     user: UserModel;
 
-    @Index('userId-clientId-orderNum')
+    @Index('userId-clientId-invoiceNum')
     @ForeignKey(() => ClientModel)
     @Column(DataType.UUID)
     clientId: string;
 
     @BelongsTo(() => ClientModel, 'clientId')
-    client: Client;
+    client: ClientModel;
 
-    @Index('userId-clientId-orderNum')
+    @Index('userId-clientId-invoiceNum')
     @Column(DataType.STRING)
     number: string;
+
+    @Column(DataType.DATE)
+    date: Date;
 
     @Column(DataType.STRING)
     reference: string;
 
-    @HasMany(() => SalesOrderLineModel)
-    lines: SalesOrderLine[]
+    @HasMany(() => SalesInvoiceLineModel)
+    lines: SalesInvoiceLineModel[]
 
 }

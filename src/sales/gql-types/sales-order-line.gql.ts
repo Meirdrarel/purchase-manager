@@ -7,7 +7,7 @@ export class SalesOrderLine {
     id: string;
 
     @Field(() => String)
-    purchaseNum: string;
+    saleOrderId: string;
 
     @Field(() => Int)
     lineNumber: number;

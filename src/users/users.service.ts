@@ -9,8 +9,7 @@ import {User} from "./user.interface";
 export class UsersService {
 
     constructor(
-        @InjectModel(UserModel)
-        private userModel: typeof UserModel
+        @InjectModel(UserModel) protected userModel: typeof UserModel
     ) {
     }
     async findByEmail(email: string): Promise<User | undefined> {

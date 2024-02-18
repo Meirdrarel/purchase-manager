@@ -1,9 +1,9 @@
 import {Field, ObjectType} from "@nestjs/graphql";
-import {SalesOrderLine} from "./sales-order-line.gql";
 import {Client} from "./client.gql";
+import {SalesInvoiceLine} from "./sales-invoice-line.gql";
 
-@ObjectType({description: 'Sales Order'})
-export class SalesOrder {
+@ObjectType({description: 'Sales Invoices'})
+export class SalesInvoice {
     @Field(() => String, {nullable: false})
     id: string;
 
@@ -13,10 +13,13 @@ export class SalesOrder {
     @Field(() => String, {nullable: false})
     number: string;
 
-    @Field(() => String, {nullable: false})
+    @Field(() => String, {nullable: true})
     reference: string
 
-    @Field(() => [SalesOrderLine])
-    lines: SalesOrderLine[]
+    @Field(() => Date)
+    date: Date;
+
+    @Field(() => [SalesInvoiceLine])
+    lines: SalesInvoiceLine[]
 
 }

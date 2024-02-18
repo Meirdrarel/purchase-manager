@@ -1,10 +1,10 @@
 import {Body, Controller, Post, Request, UseGuards} from '@nestjs/common';
-import {LocalAuthGuard} from "./auth/guards/local-auth.guard";
-import {AuthService} from "./auth/auth.service";
-import {UsersService} from "./users/users.service";
+import {LocalAuthGuard} from "./guards/local-auth.guard";
+import {AuthService} from "./auth.service";
+import {UsersService} from "../users/users.service";
 
 @Controller('/api')
-export class AppController {
+export class AuthController {
 
     constructor(
         private authService: AuthService,
@@ -15,7 +15,7 @@ export class AppController {
     @UseGuards(LocalAuthGuard)
     @Post('/login')
     async login(@Request() req: any) {
-        return this.authService.login(req.user);
+        return this.authService.createAccessToken(req.user);
     }
 
     @Post('/signup')

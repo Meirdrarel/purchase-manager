@@ -2,8 +2,9 @@ import {SalesOrderLine} from "./sales-order-line.interface";
 
 export interface SalesOrder {
     id: string;
-    userId?: number;
-    client: string;
+    userId: string;
+    clientId: string;
     number: string;
-    lines: SalesOrderLine[]
+    reference: string;
+    lines: Partial<SalesOrderLine>[]
 }

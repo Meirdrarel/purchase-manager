@@ -20,12 +20,16 @@ export class SalesOrderLineModel extends Model implements SalesOrderLine {
     @Column(DataType.UUID)
     id: string;
 
-    @Index({name:'num-line', unique: true})
+    @Index({name:'orderNum-line', unique: true})
     @AllowNull(false)
-    @Column
-    purchaseNum: string;
+    @ForeignKey(() => SalesOrderModel)
+    @Column(DataType.UUID)
+    saleOrderId: string;
 
-    @Index('num-line')
+    @BelongsTo(() => SalesOrderModel, 'saleOrderId')
+    salesOrder: SalesOrderModel;
+
+    @Index('orderNum-line')
     @AllowNull(false)
     @Column(DataType.INTEGER)
     lineNumber: number;
@@ -37,12 +41,4 @@ export class SalesOrderLineModel extends Model implements SalesOrderLine {
     @AllowNull(false)
     @Column
     quantity: number;
-
-    @ForeignKey(() => SalesOrderModel)
-    @Column(DataType.UUID)
-    purchaseOrderId: string
-
-    @BelongsTo(() => SalesOrderModel, 'purchaseOrderId')
-    user: SalesOrderModel;
-
 }
