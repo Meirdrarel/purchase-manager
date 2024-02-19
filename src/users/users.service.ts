@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import {Injectable} from '@nestjs/common';
 import {UserModel} from "./user.model";
 import {InjectModel} from "@nestjs/sequelize";
 import * as bcrypt from 'bcrypt';
@@ -12,6 +12,16 @@ export class UsersService {
         @InjectModel(UserModel) protected userModel: typeof UserModel
     ) {
     }
+
+    async findUserById(userId: string): Promise<User | undefined> {
+        return this.userModel.findOne<UserModel>({
+            where: {
+                id: userId
+            },
+            raw: true
+        })
+    }
+
     async findByEmail(email: string): Promise<User | undefined> {
         return this.userModel.findOne<UserModel>({
             where: {
