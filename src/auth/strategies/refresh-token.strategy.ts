@@ -7,7 +7,6 @@ import {AuthService} from "../auth.service";
 
 export type RefreshPayload = {
     sub: string;
-    tokenId: string;
 };
 
 @Injectable()
@@ -23,7 +22,7 @@ export class RefreshTokenStrategy extends PassportStrategy(Strategy, 'jwt-refres
 
     async validate(req: Request, payload: RefreshPayload) {
         const refreshToken = req.get('Authorization').replace('Bearer', '').trim();
-        const validated = await this.authService.validateRefreshToken(payload.sub, payload.tokenId, refreshToken);
+        const validated = await this.authService.validateRefreshToken(payload.sub, refreshToken);
         if (!validated) {
             throw new UnauthorizedException();
         } else {

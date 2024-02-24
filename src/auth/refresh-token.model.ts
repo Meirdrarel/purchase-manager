@@ -4,10 +4,6 @@ import {UserModel} from "../users/user.model";
 @Table({tableName: 'RefreshToken'})
 export class RefreshTokenModel extends Model {
 
-    @PrimaryKey
-    @Column(DataType.UUID)
-    tokenId: string
-
     @ForeignKey(() => UserModel)
     @Column
     userId: string
@@ -17,11 +13,8 @@ export class RefreshTokenModel extends Model {
     token: string
 
     @Column
-    expiresIn: Date
+    expiresDate: Date
 
     @Column
-    parentToken: string
-
-    @Column
-    tokenRank: number
+    ip: string
 }
