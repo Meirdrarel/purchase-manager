@@ -2,10 +2,11 @@ import {Injectable} from '@nestjs/common';
 import {UsersService} from "../users/users.service";
 import {JwtService} from "@nestjs/jwt";
 import * as bcrypt from 'bcrypt'
-import {User} from "../users/user.interface";
+import {UserInt} from "../users/user.interface";
 import {jwtConstants} from "./auth.module";
 import {InjectModel} from "@nestjs/sequelize";
 import {RefreshTokenModel} from "./refresh-token.model";
+import { NotFoundError } from "rxjs";
 
 @Injectable()
 export class AuthService {
@@ -66,7 +67,7 @@ export class AuthService {
         };
     }
 
-    async signIn(user: User, ip: string) {
+    async signIn(user: UserInt, ip: string) {
         await this.refreshTokenModel.destroy<RefreshTokenModel>({
             where: {
                 userId: user.id,
@@ -103,6 +104,7 @@ export class AuthService {
 
     async validateUser(email: string, password: string): Promise<any> {
         const user = await this.usersService.findByEmail(email);
+        if (!user) return null;
         const passwordValid = await bcrypt.compare(password, user.password)
         if (user && passwordValid) {
             const {password, ...result} = user;

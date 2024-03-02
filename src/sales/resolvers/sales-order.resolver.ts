@@ -5,7 +5,7 @@ import {UseGuards} from "@nestjs/common";
 import {GqlAuthGuard} from "../../auth/guards/gql-auth.guard";
 import {CurrentUser} from "../../users/current-user.decorator";
 import {SalesOrder} from "../gql-types/sales-order.gql";
-import {User} from "../../users/user.interface";
+import {UserInt} from "../../users/user.interface";
 
 
 @Resolver(() => SalesOrder)
@@ -18,7 +18,7 @@ export class SalesOrderResolver {
 
     @Query(() => [SalesOrder], {name: 'getAllSalesOrders'})
     @UseGuards(GqlAuthGuard)
-    async getAllSalesOrders(@CurrentUser() user: User): Promise<SalesOrder[]> {
+    async getAllSalesOrders(@CurrentUser() user: UserInt): Promise<SalesOrder[]> {
         return this.salesOrderService.findAllForUser(user.id);
     }
 
@@ -26,7 +26,7 @@ export class SalesOrderResolver {
     @Query(() => SalesOrder, {name: 'getSalesOrderById'})
     @UseGuards(GqlAuthGuard)
     async getSalesOrder(
-        @CurrentUser() user: User,
+        @CurrentUser() user: UserInt,
         @Args('number', { type: () => String }) number: string
     ): Promise<SalesOrder> {
         return this.salesOrderService.findOneByNumberForUser(user.id, number);
@@ -35,7 +35,7 @@ export class SalesOrderResolver {
     @Mutation(() => SalesOrder, {name: 'createSalesOrder'})
     @UseGuards(GqlAuthGuard)
     async createSalesOrder(
-        @CurrentUser() user: User,
+        @CurrentUser() user: UserInt,
         @Args('newSalesOrder') newSalesOrder: NewSalesOrderInput
     ): Promise<SalesOrder> {
         return this.salesOrderService.createSaleOrderForUser(user.id, newSalesOrder)

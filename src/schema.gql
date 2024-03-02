@@ -59,6 +59,7 @@ type Query {
   getAllClients: [Client!]!
   getAllSalesInvoices: [SalesInvoice!]!
   getAllSalesOrders: [SalesOrder!]!
+  getMe: User!
   getSalesOrderById(number: String!): SalesOrder!
 }
 
@@ -99,4 +100,9 @@ type SalesOrderLine {
   lineNumber: Int!
   quantity: Float!
   saleOrderId: String!
+}
+
+type User {
+  email: String!
+  id: String!
 }

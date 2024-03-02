@@ -3,7 +3,7 @@ import {UserModel} from "./user.model";
 import {InjectModel} from "@nestjs/sequelize";
 import * as bcrypt from 'bcrypt';
 import {randomUUID} from "crypto";
-import {User} from "./user.interface";
+import {UserInt} from "./user.interface";
 
 @Injectable()
 export class UsersService {
@@ -13,7 +13,7 @@ export class UsersService {
     ) {
     }
 
-    async findUserById(userId: string): Promise<User | undefined> {
+    async findUserById(userId: string): Promise<UserInt | undefined> {
         return this.userModel.findOne<UserModel>({
             where: {
                 id: userId
@@ -22,7 +22,7 @@ export class UsersService {
         })
     }
 
-    async findByEmail(email: string): Promise<User | undefined> {
+    async findByEmail(email: string): Promise<UserInt | undefined> {
         return this.userModel.findOne<UserModel>({
             where: {
                 email: email

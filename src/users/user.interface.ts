@@ -2,7 +2,7 @@ import {SalesOrderModel} from "../sales/models/sales-order.model";
 import {Client} from "../sales/interfaces/client.interface";
 import {SalesInvoice} from "../sales/interfaces/sales-invoice.interface";
 
-export interface User {
+export interface UserInt {
     id: string;
     email: string;
     password: string;
